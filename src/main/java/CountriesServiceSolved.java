@@ -14,16 +14,16 @@ class CountriesServiceSolved implements CountriesService {
     }
 
     public Single<Integer> countCountries(List<Country> countries) {
-        return Single.fromCallable(countries::size); // put your solution here
+        return Single.fromCallable(countries::size);
     }
 
     public Observable<Long> listPopulationOfEachCountry(List<Country> countries) {
-        return Observable.fromIterable(countries).map(Country::getPopulation); // put your solution here;
+        return Observable.fromIterable(countries).map(Country::getPopulation);
     }
 
     @Override
     public Observable<String> listNameOfEachCountry(List<Country> countries) {
-        return null; // put your solution here
+        return Observable.fromIterable(countries).map(Country::getName);
     }
 
     @Override
