@@ -54,13 +54,16 @@ class CountriesServiceSolved implements CountriesService {
     public Observable<String> getCurrencyUsdIfNotFound(String countryName, List<Country> countries) {
         return Observable.fromIterable(countries)
                 .filter(country -> country.name.equals(countryName))
-                .map(country -> country.currency)
+                .map(Country::getCurrency)
                 .defaultIfEmpty("USD");
     }
 
     @Override
     public Observable<Long> sumPopulationOfCountries(List<Country> countries) {
-        return null; // put your solution here
+        return Observable.fromIterable(countries)
+                .map(Country::getPopulation)
+                .reduce((first, second) -> first + second)
+                .toObservable();
     }
 
     @Override
