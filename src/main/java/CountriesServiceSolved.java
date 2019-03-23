@@ -1,10 +1,13 @@
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 class CountriesServiceSolved implements CountriesService {
 
@@ -43,7 +46,10 @@ class CountriesServiceSolved implements CountriesService {
 
     @Override
     public Observable<Country> listPopulationMoreThanOneMillionWithTimeoutFallbackToEmpty(final FutureTask<List<Country>> countriesFromNetwork) {
-        return null; // put your solution here
+        return Observable.fromFuture(countriesFromNetwork, Schedulers.io())
+                .flatMapIterable(list -> list)
+                .filter(country -> country.population > 1000000)
+                .timeout(1, TimeUnit.SECONDS, Observable.empty());
     }
 
     @Override
