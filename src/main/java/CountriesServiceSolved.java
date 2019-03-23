@@ -1,13 +1,11 @@
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 class CountriesServiceSolved implements CountriesService {
 
@@ -54,7 +52,10 @@ class CountriesServiceSolved implements CountriesService {
 
     @Override
     public Observable<String> getCurrencyUsdIfNotFound(String countryName, List<Country> countries) {
-        return null; // put your solution here
+        return Observable.fromIterable(countries)
+                .filter(country -> country.name.equals(countryName))
+                .map(country -> country.currency)
+                .defaultIfEmpty("USD");
     }
 
     @Override
