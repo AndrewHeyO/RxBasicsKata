@@ -84,6 +84,6 @@ class CountriesServiceSolved implements CountriesService {
     @Override
     public Single<Boolean> areEmittingSameSequences(Observable<Country> countryObservable1,
                                                     Observable<Country> countryObservable2) {
-        return null; // put your solution here
+        return Observable.sequenceEqual(countryObservable1, countryObservable2);
     }
 }
