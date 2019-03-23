@@ -68,7 +68,8 @@ class CountriesServiceSolved implements CountriesService {
 
     @Override
     public Single<Map<String, Long>> mapCountriesToNamePopulation(List<Country> countries) {
-        return null; // put your solution here
+        return Observable.fromIterable(countries)
+                .toMap(Country::getName, Country::getPopulation);
     }
 
     @Override
